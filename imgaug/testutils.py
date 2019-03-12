@@ -25,7 +25,7 @@ def create_random_keypoints(size_images, nb_keypoints_per_img):
         for _ in sm.xrange(nb_keypoints_per_img):
             x = np.random.randint(0, width-1)
             y = np.random.randint(0, height-1)
-            kps.append(ia.Keypoint(x=x, y=y))
+            kps.append(ia.Keypoint(x=x, y=y, vis=None, label=None))
         result.append(ia.KeypointsOnImage(kps, shape=size_images[1:]))
     return result
 

@@ -97,7 +97,7 @@ def test_GammaContrast():
     assert all(seen)
 
     # check that keypoints are not changed
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(1, 1)], shape=(3, 3, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(1, 1, None, None)], shape=(3, 3, 3))
     kpsoi_aug = iaa.GammaContrast(gamma=2).augment_keypoints([kpsoi])
     assert keypoints_equal([kpsoi], kpsoi_aug)
 
@@ -248,7 +248,7 @@ def test_SigmoidContrast():
     assert all(seen)
 
     # check that keypoints are not changed
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(1, 1)], shape=(3, 3, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(1, 1, None, None)], shape=(3, 3, 3))
     kpsoi_aug = iaa.SigmoidContrast(gain=10, cutoff=0.5).augment_keypoints([kpsoi])
     assert keypoints_equal([kpsoi], kpsoi_aug)
 
@@ -364,7 +364,7 @@ def test_LogContrast():
     assert all(seen)
 
     # check that keypoints are not changed
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(1, 1)], shape=(3, 3, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(1, 1, None, None)], shape=(3, 3, 3))
     kpsoi_aug = iaa.LogContrast(gain=2).augment_keypoints([kpsoi])
     assert keypoints_equal([kpsoi], kpsoi_aug)
 
@@ -475,7 +475,7 @@ def test_LinearContrast():
     assert all(seen)
 
     # check that keypoints are not changed
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(1, 1)], shape=(3, 3, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(1, 1, None, None)], shape=(3, 3, 3))
     kpsoi_aug = iaa.LinearContrast(alpha=2).augment_keypoints([kpsoi])
     assert keypoints_equal([kpsoi], kpsoi_aug)
 
@@ -789,7 +789,7 @@ class TestAllChannelsCLAHE(unittest.TestCase):
         """
 
     def test_keypoints_not_changed(self):
-        kpsoi = ia.KeypointsOnImage([ia.Keypoint(1, 1)], shape=(3, 3, 3))
+        kpsoi = ia.KeypointsOnImage([ia.Keypoint(1, 1, None, None)], shape=(3, 3, 3))
         kpsoi_aug = iaa.AllChannelsCLAHE().augment_keypoints([kpsoi])
         assert keypoints_equal([kpsoi], kpsoi_aug)
 
@@ -1404,7 +1404,7 @@ class TestAllChannelsHistogramEqualization(unittest.TestCase):
                 assert np.max(img_aug) > max_value - 0.1 * dynamic_range
 
     def test_keypoints_not_changed(self):
-        kpsoi = ia.KeypointsOnImage([ia.Keypoint(1, 1)], shape=(3, 3, 3))
+        kpsoi = ia.KeypointsOnImage([ia.Keypoint(1, 1, None, None)], shape=(3, 3, 3))
         kpsoi_aug = iaa.AllChannelsHistogramEqualization().augment_keypoints([kpsoi])
         assert keypoints_equal([kpsoi], kpsoi_aug)
 

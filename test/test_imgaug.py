@@ -1997,19 +1997,19 @@ def test_Keypoint():
     eps = 1e-8
 
     # x/y/x_int/y_int
-    kp = ia.Keypoint(y=1, x=2)
+    kp = ia.Keypoint(x=2, y=1, vis=None, label=None)
     assert kp.y == 1
     assert kp.x == 2
     assert kp.y_int == 1
     assert kp.x_int == 2
-    kp = ia.Keypoint(y=1.1, x=2.7)
+    kp = ia.Keypoint(x=2.7, y=1.1, vis=None, label=None)
     assert 1.1 - eps < kp.y < 1.1 + eps
     assert 2.7 - eps < kp.x < 2.7 + eps
     assert kp.y_int == 1
     assert kp.x_int == 3
 
     # project
-    kp = ia.Keypoint(y=1, x=2)
+    kp = ia.Keypoint(x=2, y=1, vis=None, label=None)
     kp2 = kp.project((10, 10), (10, 10))
     assert kp2.y == 1
     assert kp2.x == 2
@@ -2024,7 +2024,7 @@ def test_Keypoint():
     assert kp2.x == 4
 
     # shift
-    kp = ia.Keypoint(y=1, x=2)
+    kp = ia.Keypoint(x=2, y=1, vis=None, label=None)
     kp2 = kp.shift(y=1)
     assert kp2.y == 2
     assert kp2.x == 2
@@ -2042,7 +2042,7 @@ def test_Keypoint():
     assert kp2.x == 4
 
     # generate_similar_points_manhattan
-    kp = ia.Keypoint(y=4, x=5)
+    kp = ia.Keypoint(x=5, y=4, vis=None, label=None)
     kps_manhatten = kp.generate_similar_points_manhattan(0, 1.0, return_array=False)
     assert len(kps_manhatten) == 1
     assert kps_manhatten[0].y == 4
@@ -2062,16 +2062,16 @@ def test_Keypoint():
                     for kp_manhatten_x, kp_manhatten_y in kps_manhatten])
 
     # __repr__ / __str_
-    kp = ia.Keypoint(y=1, x=2)
+    kp = ia.Keypoint(x=2, y=1, vis=None, label=None)
     assert kp.__repr__() == kp.__str__() == "Keypoint(x=2.00000000, y=1.00000000)"
-    kp = ia.Keypoint(y=1.2, x=2.7)
+    kp = ia.Keypoint(x=2.7, y=1.2, vis=None, label=None)
     assert kp.__repr__() == kp.__str__() == "Keypoint(x=2.70000000, y=1.20000000)"
 
 
 def test_KeypointsOnImage():
     eps = 1e-8
 
-    kps = [ia.Keypoint(x=1, y=2), ia.Keypoint(x=3, y=4)]
+    kps = [ia.Keypoint(x=1, y=2, vis=None, label=None), ia.Keypoint(x=3, y=4, vis=None, label=None)]
 
     # height/width
     kpi = ia.KeypointsOnImage(keypoints=kps, shape=(10, 20, 3))
@@ -2135,7 +2135,7 @@ def test_KeypointsOnImage():
     assert np.all(image2[kps_mask] == [0, 255, 0])
     assert np.all(image2[~kps_mask] == [10, 10, 10])
 
-    kpi = ia.KeypointsOnImage(keypoints=kps + [ia.Keypoint(x=100, y=100)], shape=(5, 5, 3))
+    kpi = ia.KeypointsOnImage(keypoints=kps + [ia.Keypoint(x=100, y=100, vis=None, label=None)], shape=(5, 5, 3))
     image = np.zeros((5, 5, 3), dtype=np.uint8) + 10
     kps_mask = np.zeros(image.shape[0:2], dtype=np.bool)
     kps_mask[2, 1] = 1
@@ -2144,7 +2144,7 @@ def test_KeypointsOnImage():
     assert np.all(image_kps[kps_mask] == [0, 255, 0])
     assert np.all(image_kps[~kps_mask] == [10, 10, 10])
 
-    kpi = ia.KeypointsOnImage(keypoints=kps + [ia.Keypoint(x=100, y=100)], shape=(5, 5, 3))
+    kpi = ia.KeypointsOnImage(keypoints=kps + [ia.Keypoint(x=100, y=100, vis=None, label=None)], shape=(5, 5, 3))
     image = np.zeros((5, 5, 3), dtype=np.uint8) + 10
     got_exception = False
     try:
@@ -2155,7 +2155,7 @@ def test_KeypointsOnImage():
         got_exception = True
     assert got_exception
 
-    kpi = ia.KeypointsOnImage(keypoints=kps + [ia.Keypoint(x=5, y=5)], shape=(5, 5, 3))
+    kpi = ia.KeypointsOnImage(keypoints=kps + [ia.Keypoint(x=5, y=5, vis=None, label=None)], shape=(5, 5, 3))
     image = np.zeros((5, 5, 3), dtype=np.uint8) + 10
     kps_mask = np.zeros(image.shape[0:2], dtype=np.bool)
     kps_mask[2, 1] = 1
@@ -2305,7 +2305,7 @@ def test_KeypointsOnImage():
     assert got_exception
 
     # to_distance_maps()
-    kpi = ia.KeypointsOnImage(keypoints=[ia.Keypoint(x=2, y=3)], shape=(5, 5, 3))
+    kpi = ia.KeypointsOnImage(keypoints=[ia.Keypoint(x=2, y=3, vis=None, label=None)], shape=(5, 5, 3))
     distance_map = kpi.to_distance_maps()
     expected_xx = np.float32([
         [0, 1, 2, 3, 4],
@@ -2337,7 +2337,8 @@ def test_KeypointsOnImage():
     # [2, 2, X, 2]
     # this test could have been done a bit better by simply splitting the distance maps, one per keypoint, considering
     # the function returns one distance map per keypoint
-    kpi = ia.KeypointsOnImage(keypoints=[ia.Keypoint(x=2, y=3), ia.Keypoint(x=1, y=0)], shape=(4, 4, 3))
+    kpi = ia.KeypointsOnImage(keypoints=[ia.Keypoint(x=2, y=3, vis=None, label=None),
+                                         ia.Keypoint(x=1, y=0, vis=None, label=None)], shape=(4, 4, 3))
     expected = np.float32([
         [(0-1)**2 + (0-0)**2, (1-1)**2 + (0-0)**2, (2-1)**2 + (0-0)**2, (3-1)**2 + (0-0)**2],
         [(0-1)**2 + (1-0)**2, (1-1)**2 + (1-0)**2, (2-1)**2 + (1-0)**2, (3-1)**2 + (1-0)**2],
@@ -2414,7 +2415,7 @@ def test_KeypointsOnImage():
     assert got_exception
 
     # copy()
-    kps = [ia.Keypoint(x=1, y=2), ia.Keypoint(x=3, y=4)]
+    kps = [ia.Keypoint(x=1, y=2, vis=None, label=None), ia.Keypoint(x=3, y=4, vis=None, label=None)]
     kpi = ia.KeypointsOnImage(keypoints=kps, shape=(5, 5, 3))
     kpi2 = kpi.copy()
     assert kpi2.keypoints[0].x == 1
@@ -2428,7 +2429,7 @@ def test_KeypointsOnImage():
     assert kpi2.keypoints[1].y == 4
 
     # deepcopy()
-    kps = [ia.Keypoint(x=1, y=2), ia.Keypoint(x=3, y=4)]
+    kps = [ia.Keypoint(x=1, y=2, vis=None, label=None), ia.Keypoint(x=3, y=4, vis=None, label=None)]
     kpi = ia.KeypointsOnImage(keypoints=kps, shape=(5, 5, 3))
     kpi2 = kpi.deepcopy()
     assert kpi2.keypoints[0].x == 1
@@ -2442,7 +2443,7 @@ def test_KeypointsOnImage():
     assert kpi2.keypoints[1].y == 4
 
     # repr/str
-    kps = [ia.Keypoint(x=1, y=2), ia.Keypoint(x=3, y=4)]
+    kps = [ia.Keypoint(x=1, y=2, vis=None, label=None), ia.Keypoint(x=3, y=4, vis=None, label=None)]
     kpi = ia.KeypointsOnImage(keypoints=kps, shape=(5, 5, 3))
     expected = "KeypointsOnImage([Keypoint(x=1.00000000, y=2.00000000), Keypoint(x=3.00000000, y=4.00000000)], " \
                + "shape=(5, 5, 3))"
@@ -2491,9 +2492,9 @@ def test_BoundingBox():
 
     # contains
     bb = ia.BoundingBox(y1=1, x1=2, y2=1+4, x2=2+5, label=None)
-    assert bb.contains(ia.Keypoint(x=2.5, y=1.5)) is True
-    assert bb.contains(ia.Keypoint(x=2, y=1)) is True
-    assert bb.contains(ia.Keypoint(x=0, y=0)) is False
+    assert bb.contains(ia.Keypoint(x=2.5, y=1.5, vis=None, label=None)) is True
+    assert bb.contains(ia.Keypoint(x=2, y=1, vis=None, label=None)) is True
+    assert bb.contains(ia.Keypoint(x=0, y=0, vis=None, label=None)) is False
 
     # project
     bb = ia.BoundingBox(y1=10, x1=20, y2=30, x2=40, label=None)
@@ -4137,7 +4138,8 @@ def test_SegmentationMapOnImage_deepcopy():
 
 def test_Polygon___init__():
     # exterior is list of Keypoint or
-    poly = ia.Polygon([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1), ia.Keypoint(x=0.5, y=2.5)])
+    poly = ia.Polygon([ia.Keypoint(x=0, y=0, vis=None, label=None), ia.Keypoint(x=1, y=1, vis=None, label=None),
+                       ia.Keypoint(x=0.5, y=2.5, vis=None, label=None)])
     assert poly.exterior.dtype.type == np.float32
     assert np.allclose(
         poly.exterior,
@@ -6242,7 +6244,7 @@ class Test_ConcavePolygonRecoverer(unittest.TestCase):
             bb_y1, bb_y2 = min(yy), max(yy)
             bb = ia.BoundingBox(x1=bb_x1-1e-4, y1=bb_y1-1e-4, x2=bb_x2+1e-4, y2=bb_y2+1e-4)
             for point in points:
-                assert bb.contains(ia.Keypoint(x=point[0], y=point[1]))
+                assert bb.contains(ia.Keypoint(x=point[0], y=point[1], vis=None, label=None))
 
     def test__remove_consecutive_duplicate_points(self):
         recoverer = _ConcavePolygonRecoverer()

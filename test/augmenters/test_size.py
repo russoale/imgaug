@@ -180,7 +180,8 @@ def test_Resize():
 
     # keypoints on 3d image
     aug = iaa.Resize({"height": 8, "width": 12})
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2), ia.Keypoint(x=4, y=1)], shape=base_img3d.shape)
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None),
+                                 ia.Keypoint(x=4, y=1, vis=None, label=None)], shape=base_img3d.shape)
     kpsoi_aug = aug.augment_keypoints([kpsoi])[0]
     assert len(kpsoi_aug.keypoints) == 2
     assert kpsoi_aug.shape == (8, 12, 3)
@@ -208,7 +209,8 @@ def test_Resize():
     # keypoints on 2d image,
     # different resize factors per axis
     aug = iaa.Resize({"width": 3.0, "height": 8})
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2), ia.Keypoint(x=4, y=1)], shape=base_img2d.shape)
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None),
+                                 ia.Keypoint(x=4, y=1, vis=None, label=None)], shape=base_img2d.shape)
     kpsoi_aug = aug.augment_keypoints([kpsoi])[0]
     assert len(kpsoi_aug.keypoints) == 2
     assert kpsoi_aug.shape == (8, 24)
@@ -599,8 +601,9 @@ def test_Pad():
     images = np.array([base_img])
     images_list = [base_img]
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     heatmaps_arr = np.float32([[0, 0, 0],
                                [0, 1.0, 0],
@@ -804,7 +807,8 @@ def test_Pad():
     )
 
     # keypoints
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2), ia.Keypoint(x=3, y=0)], shape=(4, 4, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None),
+                                 ia.Keypoint(x=3, y=0, vis=None, label=None)], shape=(4, 4, 3))
     kpsoi_aug = iaa.Pad((2, 0, 4, 4), keep_size=False).augment_keypoints([kpsoi])[0]
     assert kpsoi_aug.shape == (10, 8, 3)
     assert len(kpsoi_aug.keypoints) == 2
@@ -814,7 +818,8 @@ def test_Pad():
     assert np.allclose(kpsoi_aug.keypoints[1].y, 2+0)
 
     # keypoints, with keep_size=True
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2), ia.Keypoint(x=3, y=0)], shape=(4, 4, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None),
+                                 ia.Keypoint(x=3, y=0, vis=None, label=None)], shape=(4, 4, 3))
     kpsoi_aug = iaa.Pad((2, 0, 4, 4), keep_size=True).augment_keypoints([kpsoi])[0]
     assert kpsoi_aug.shape == (4, 4, 3)
     assert len(kpsoi_aug.keypoints) == 2
@@ -1004,8 +1009,9 @@ def test_Pad():
     image[0, 3] = 255
     image[3, 3] = 255
     height, width = image.shape[0:2]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=3, y=3),
-                                      ia.Keypoint(x=3, y=3)], shape=image.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=3, y=3, vis=None, label=None),
+                                      ia.Keypoint(x=3, y=3, vis=None, label=None)], shape=image.shape)]
     pads = [
         (1.0, 0, 0, 0),
         (0, 1.0, 0, 0),
@@ -1086,7 +1092,8 @@ def test_Pad():
     )
 
     # keypoints
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2), ia.Keypoint(x=3, y=0)], shape=(4, 4, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None),
+                                 ia.Keypoint(x=3, y=0, vis=None, label=None)], shape=(4, 4, 3))
     kpsoi_aug = iaa.Pad(percent=(0.5, 0, 1.0, 1.0), keep_size=False).augment_keypoints([kpsoi])[0]
     assert kpsoi_aug.shape == (10, 8, 3)
     assert len(kpsoi_aug.keypoints) == 2
@@ -1096,7 +1103,8 @@ def test_Pad():
     assert np.allclose(kpsoi_aug.keypoints[1].y, 2+0)
 
     # keypoints, with keep_size=True
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2), ia.Keypoint(x=3, y=0)], shape=(4, 4, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None),
+                                 ia.Keypoint(x=3, y=0, vis=None, label=None)], shape=(4, 4, 3))
     kpsoi_aug = iaa.Pad(percent=(0.5, 0, 1.0, 1.0), keep_size=True).augment_keypoints([kpsoi])[0]
     assert kpsoi_aug.shape == (4, 4, 3)
     assert len(kpsoi_aug.keypoints) == 2
@@ -1275,8 +1283,9 @@ def test_Crop():
     images = np.array([base_img])
     images_list = [base_img]
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     heatmaps_arr = np.float32([[0, 0, 0],
                                [0, 1.0, 0],
@@ -1456,7 +1465,8 @@ def test_Crop():
     )
 
     # keypoints
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=3, y=6), ia.Keypoint(x=8, y=5)], shape=(14, 14, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=3, y=6, vis=None, label=None),
+                                 ia.Keypoint(x=8, y=5, vis=None, label=None)], shape=(14, 14, 3))
     kpsoi_aug = iaa.Crop((1, 0, 4, 4), keep_size=False).augment_keypoints([kpsoi])[0]
     assert kpsoi_aug.shape == (9, 10, 3)
     assert len(kpsoi_aug.keypoints) == 2
@@ -1466,7 +1476,8 @@ def test_Crop():
     assert np.allclose(kpsoi_aug.keypoints[1].y, 5-1)
 
     # keypoints, with keep_size=True
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=3, y=6), ia.Keypoint(x=8, y=5)], shape=(14, 14, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=3, y=6, vis=None, label=None),
+                                 ia.Keypoint(x=8, y=5, vis=None, label=None)], shape=(14, 14, 3))
     kpsoi_aug = iaa.Crop((1, 0, 4, 4), keep_size=True).augment_keypoints([kpsoi])[0]
     assert kpsoi_aug.shape == (14, 14, 3)
     assert len(kpsoi_aug.keypoints) == 2
@@ -1553,8 +1564,9 @@ def test_Crop():
     # test crop by 10% on each side
     image = np.random.randint(0, 255, size=(50, 50), dtype=np.uint8)
     height, width = image.shape[0:2]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=10, y=11), ia.Keypoint(x=20, y=21),
-                                      ia.Keypoint(x=30, y=31)], shape=image.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=10, y=11, vis=None, label=None),
+                                      ia.Keypoint(x=20, y=21, vis=None, label=None),
+                                      ia.Keypoint(x=30, y=31, vis=None, label=None)], shape=image.shape)]
     crops = [
         (0.1, 0, 0, 0),
         (0, 0.1, 0, 0),
@@ -1618,7 +1630,8 @@ def test_Crop():
     )
 
     # keypoints
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=12, y=10), ia.Keypoint(x=8, y=12)], shape=(16, 20, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=12, y=10, vis=None, label=None),
+                                 ia.Keypoint(x=8, y=12, vis=None, label=None)], shape=(16, 20, 3))
     kpsoi_aug = iaa.Crop(percent=(0.25, 0, 0.5, 0.1), keep_size=False).augment_keypoints([kpsoi])[0]
     assert kpsoi_aug.shape == (4, 18, 3)
     assert len(kpsoi_aug.keypoints) == 2
@@ -1628,7 +1641,8 @@ def test_Crop():
     assert np.allclose(kpsoi_aug.keypoints[1].y, 12-4)
 
     # keypoints, with keep_size=True
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=12, y=10), ia.Keypoint(x=8, y=12)], shape=(16, 20, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=12, y=10, vis=None, label=None),
+                                 ia.Keypoint(x=8, y=12, vis=None, label=None)], shape=(16, 20, 3))
     kpsoi_aug = iaa.Crop(percent=(0.25, 0, 0.5, 0.1), keep_size=True).augment_keypoints([kpsoi])[0]
     assert kpsoi_aug.shape == (16, 20, 3)
     assert len(kpsoi_aug.keypoints) == 2
@@ -1897,33 +1911,33 @@ def test_PadToFixedSize():
     assert np.array_equal(observed, expected)
 
     # basic keypoint test
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=(3, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=(3, 3))
     aug = iaa.PadToFixedSize(height=4, width=4, pad_mode="edge", position="center")
     observed = aug.augment_keypoints([kpsoi])
-    expected = ia.KeypointsOnImage([ia.Keypoint(x=2, y=2)], shape=(4, 4))
+    expected = ia.KeypointsOnImage([ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=(4, 4))
     assert observed[0].shape == expected.shape
     assert keypoints_equal(observed, [expected])
 
     # keypoint test with shape not being changed
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=(3, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=(3, 3))
     aug = iaa.PadToFixedSize(height=3, width=3, pad_mode="edge", position="center")
     observed = aug.augment_keypoints([kpsoi])
-    expected = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=(3, 3))
+    expected = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=(3, 3))
     assert observed[0].shape == expected.shape
     assert keypoints_equal(observed, [expected])
 
     # keypoint test with explicit non-center position
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=(3, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=(3, 3))
     aug = iaa.PadToFixedSize(height=4, width=4, pad_mode="edge", position="left-top")
     observed = aug.augment_keypoints([kpsoi])
-    expected = ia.KeypointsOnImage([ia.Keypoint(x=2, y=2)], shape=(4, 4))
+    expected = ia.KeypointsOnImage([ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=(4, 4))
     assert observed[0].shape == expected.shape
     assert keypoints_equal(observed, [expected])
 
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=(3, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=(3, 3))
     aug = iaa.PadToFixedSize(height=4, width=4, pad_mode="edge", position="right-bottom")
     observed = aug.augment_keypoints([kpsoi])
-    expected = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=(4, 4))
+    expected = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=(4, 4))
     assert observed[0].shape == expected.shape
     assert keypoints_equal(observed, [expected])
 
@@ -2098,33 +2112,33 @@ def test_CropToFixedSize():
     assert np.array_equal(observed, expected)
 
     # basic keypoint test
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=(3, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=(3, 3))
     aug = iaa.CropToFixedSize(height=1, width=1, position="center")
     observed = aug.augment_keypoints([kpsoi])
-    expected = ia.KeypointsOnImage([ia.Keypoint(x=0, y=0)], shape=(1, 1))
+    expected = ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None)], shape=(1, 1))
     assert observed[0].shape == expected.shape
     assert keypoints_equal(observed, [expected])
 
     # keypoint test with shape not being changed
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=(3, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=(3, 3))
     aug = iaa.CropToFixedSize(height=3, width=3, position="center")
     observed = aug.augment_keypoints([kpsoi])
-    expected = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=(3, 3))
+    expected = ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=(3, 3))
     assert observed[0].shape == expected.shape
     assert keypoints_equal(observed, [expected])
 
     # keypoint test with explicit non-center position
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=2, y=2)], shape=(5, 5))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=(5, 5))
     aug = iaa.CropToFixedSize(height=3, width=3, position="left-top")
     observed = aug.augment_keypoints([kpsoi])
-    expected = ia.KeypointsOnImage([ia.Keypoint(x=0, y=0)], shape=(3, 3))
+    expected = ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None)], shape=(3, 3))
     assert observed[0].shape == expected.shape
     assert keypoints_equal(observed, [expected])
 
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=2, y=2)], shape=(5, 5))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=(5, 5))
     aug = iaa.CropToFixedSize(height=3, width=3, position="right-bottom")
     observed = aug.augment_keypoints([kpsoi])
-    expected = ia.KeypointsOnImage([ia.Keypoint(x=2, y=2)], shape=(3, 3))
+    expected = ia.KeypointsOnImage([ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=(3, 3))
     assert observed[0].shape == expected.shape
     assert keypoints_equal(observed, [expected])
 
@@ -2286,7 +2300,8 @@ def test_KeepSizeByResize():
     assert np.allclose(observed, expected)
 
     # keypoints
-    keypoints = [ia.Keypoint(x=0, y=1), ia.Keypoint(x=1, y=1), ia.Keypoint(x=2, y=3)]
+    keypoints = [ia.Keypoint(x=0, y=1, vis=None, label=None), ia.Keypoint(x=1, y=1, vis=None, label=None),
+                 ia.Keypoint(x=2, y=3, vis=None, label=None)]
     kpoi = ia.KeypointsOnImage(keypoints, shape=(4, 4, 3))
     aug = iaa.KeepSizeByResize(children, interpolation="cubic")
     kpoi_aug = aug.augment_keypoints([kpoi])[0]

@@ -408,7 +408,7 @@ def test_Alpha():
     # -----
     # keypoints
     # -----
-    kps = [ia.Keypoint(x=5, y=10), ia.Keypoint(x=6, y=11)]
+    kps = [ia.Keypoint(x=5, y=10, vis=None, label=None), ia.Keypoint(x=6, y=11, vis=None, label=None)]
     kpsoi = ia.KeypointsOnImage(kps, shape=(20, 20, 3))
 
     aug = iaa.Alpha(1.0, iaa.Noop(), iaa.Affine(translate_px={"x": 1}))
@@ -725,7 +725,7 @@ def test_AlphaElementwise():
     # -----
     # keypoints
     # -----
-    kps = [ia.Keypoint(x=5, y=10), ia.Keypoint(x=6, y=11)]
+    kps = [ia.Keypoint(x=5, y=10, vis=None, label=None), ia.Keypoint(x=6, y=11, vis=None, label=None)]
     kpsoi = ia.KeypointsOnImage(kps, shape=(20, 20, 3))
 
     aug = iaa.AlphaElementwise(1.0, iaa.Noop(), iaa.Affine(translate_px={"x": 1}))

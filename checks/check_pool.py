@@ -322,7 +322,7 @@ def load_images(n_batches=10, sleep=0.0, draw_text=True):
     batch_size = 4
     astronaut = data.astronaut()
     astronaut = ia.imresize_single_image(astronaut, (64, 64))
-    kps = ia.KeypointsOnImage([ia.Keypoint(x=15, y=25)], shape=astronaut.shape)
+    kps = ia.KeypointsOnImage([ia.Keypoint(x=15, y=25, vis=None, label=None)], shape=astronaut.shape)
 
     counter = 0
     for i in range(n_batches):

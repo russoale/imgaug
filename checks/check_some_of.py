@@ -14,7 +14,7 @@ NB_AUGS_PER_IMAGE = 10
 def main():
     image = data.astronaut()
     image = ia.imresize_single_image(image, (64, 64))
-    keypoints_on_image = ia.KeypointsOnImage([ia.Keypoint(x=10, y=10)], shape=image.shape)
+    keypoints_on_image = ia.KeypointsOnImage([ia.Keypoint(x=10, y=10, vis=None, label=None)], shape=image.shape)
     images_arr = np.array([image for _ in range(NB_AUGS_PER_IMAGE)])
     images_list = [image for _ in range(NB_AUGS_PER_IMAGE)]
     keypoints_on_images = [keypoints_on_image.deepcopy() for _ in range(NB_AUGS_PER_IMAGE)]

@@ -14,10 +14,10 @@ def main():
     kps = [
         ia.KeypointsOnImage(
             [
-                ia.Keypoint(x=123, y=102),
-                ia.Keypoint(x=182, y=98),
-                ia.Keypoint(x=155, y=134),
-                ia.Keypoint(x=-20, y=20)
+                ia.Keypoint(x=123, y=102, vis=None, label=None),
+                ia.Keypoint(x=182, y=98, vis=None, label=None),
+                ia.Keypoint(x=155, y=134, vis=None, label=None),
+                ia.Keypoint(x=-20, y=20, vis=None, label=None)
             ],
             shape=(image.shape[0], image.shape[1])
         )

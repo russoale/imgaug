@@ -192,7 +192,7 @@ def example_keypoints():
         for _ in range(4):
             x = random.randint(0, width-1)
             y = random.randint(0, height-1)
-            keypoints.append(ia.Keypoint(x=x, y=y))
+            keypoints.append(ia.Keypoint(x=x, y=y, vis=None, label=None))
         keypoints_on_images.append(ia.KeypointsOnImage(keypoints, shape=image.shape))
 
     seq = iaa.Sequential([iaa.GaussianBlur((0, 3.0)), iaa.Affine(scale=(0.5, 0.7))])

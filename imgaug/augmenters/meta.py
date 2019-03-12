@@ -1298,7 +1298,7 @@ class Augmenter(object):  # pylint: disable=locally-disabled, unused-variable, l
         >>> import numpy as np
         >>> aug = iaa.Add(1)
         >>> images = np.zeros((16, 128, 128, 3), dtype=np.uint8)
-        >>> batches = [ia.Batch(images=np.copy(images)) for _ in range(100)]
+        >>> batches = [ia.Batch(images=np.copy()) for _ in range(100)]
         >>> with aug.pool(processes=-1, seed=2) as pool:
         >>>     batches_aug = pool.map_batches(batches, chunksize=8)
         >>> print(np.sum(batches_aug[0].images_aug[0]))
@@ -1315,7 +1315,7 @@ class Augmenter(object):  # pylint: disable=locally-disabled, unused-variable, l
         >>> images = np.zeros((16, 128, 128, 3), dtype=np.uint8)
         >>> def generate_batches():
         >>>     for _ in range(100):
-        >>>         yield ia.Batch(images=np.copy(images))
+        >>>         yield ia.Batch(images=np.copy())
         >>>
         >>> with aug.pool(processes=-1, seed=2) as pool:
         >>>     batches_aug = pool.imap_batches(generate_batches(), chunksize=8)

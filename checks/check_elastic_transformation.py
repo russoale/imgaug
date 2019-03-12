@@ -55,10 +55,12 @@ def main():
     ia.imshow(ia.draw_grid(images_aug, cols=10))
 
     kps = ia.KeypointsOnImage(
-        [ia.Keypoint(x=1, y=1),
-         ia.Keypoint(x=50, y=24), ia.Keypoint(x=42, y=96), ia.Keypoint(x=88, y=106), ia.Keypoint(x=88, y=53),
-         ia.Keypoint(x=0, y=0), ia.Keypoint(x=128, y=128), ia.Keypoint(x=-20, y=30), ia.Keypoint(x=20, y=-30),
-         ia.Keypoint(x=-20, y=-30)],
+        [ia.Keypoint(x=1, y=1, vis=None, label=None),
+         ia.Keypoint(x=50, y=24, vis=None, label=None), ia.Keypoint(x=42, y=96, vis=None, label=None),
+         ia.Keypoint(x=88, y=106, vis=None, label=None), ia.Keypoint(x=88, y=53, vis=None, label=None),
+         ia.Keypoint(x=0, y=0, vis=None, label=None), ia.Keypoint(x=128, y=128, vis=None, label=None),
+         ia.Keypoint(x=-20, y=30, vis=None, label=None), ia.Keypoint(x=20, y=-30, vis=None, label=None),
+         ia.Keypoint(x=-20, y=-30, vis=None, label=None)],
         shape=image.shape
     )
 

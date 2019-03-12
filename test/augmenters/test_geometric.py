@@ -46,8 +46,9 @@ def test_Affine():
                 outer_pixels[0].append(i)
                 outer_pixels[1].append(j)
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     # no translation/scale/rotate/shear, shouldnt change nothing
     aug = iaa.Affine(scale=1.0, translate_px=0, rotate=0, shear=0)
@@ -234,11 +235,15 @@ def test_Affine():
             outer_pixels[0].append(y)
             outer_pixels[1].append(x)
     inner_pixels = ([1, 1, 2, 2], [1, 2, 1, 2])
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=3, y=0),
-                                      ia.Keypoint(x=0, y=3), ia.Keypoint(x=3, y=3)],
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=3, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=0, y=3, vis=None, label=None),
+                                      ia.Keypoint(x=3, y=3, vis=None, label=None)],
                                      shape=image.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=0.765, y=0.765), ia.Keypoint(x=2.235, y=0.765),
-                                          ia.Keypoint(x=0.765, y=2.235), ia.Keypoint(x=2.235, y=2.235)],
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=0.765, y=0.765, vis=None, label=None),
+                                          ia.Keypoint(x=2.235, y=0.765, vis=None, label=None),
+                                          ia.Keypoint(x=0.765, y=2.235, vis=None, label=None),
+                                          ia.Keypoint(x=2.235, y=2.235, vis=None, label=None)],
                                          shape=image.shape)]
 
     observed = aug.augment_images(images)
@@ -319,8 +324,8 @@ def test_Affine():
     images_aug = np.array([image_aug])
     images_list = [image]
     images_aug_list = [image_aug]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=base_img.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=2, y=1)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=2, y=1, vis=None, label=None)], shape=base_img.shape)]
 
     observed = aug.augment_images(images)
     assert np.array_equal(observed, images_aug)
@@ -388,8 +393,8 @@ def test_Affine():
     images_aug = np.array([image_aug])
     images_list = [image]
     images_aug_list = [image_aug]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=base_img.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     observed = aug.augment_images(images)
     assert np.array_equal(observed, images_aug)
@@ -421,8 +426,8 @@ def test_Affine():
     images_aug = np.array([image_aug])
     images_list = [image]
     images_aug_list = [image_aug]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=base_img.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=2, y=1)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=2, y=1, vis=None, label=None)], shape=base_img.shape)]
 
     observed = aug.augment_images(images)
     assert np.array_equal(observed, images_aug)
@@ -454,8 +459,8 @@ def test_Affine():
     images_aug = np.array([image_aug])
     images_list = [image]
     images_aug_list = [image_aug]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=base_img.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     observed = aug.augment_images(images)
     assert np.array_equal(observed, images_aug)
@@ -578,10 +583,12 @@ def test_Affine():
     images_aug = np.array([image_aug])
     images_list = [image]
     images_aug_list = [image_aug]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=1), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=1)], shape=base_img.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0), ia.Keypoint(x=1, y=1),
-                                          ia.Keypoint(x=1, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=1, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0, vis=None, label=None),
+                                          ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                          ia.Keypoint(x=1, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     observed = aug.augment_images(images)
     observed[observed >= 100] = 255
@@ -849,7 +856,7 @@ def test_Affine():
 
         # verify that shape in KeypointsOnImages changes
         aug = iaa.Affine(rotate=90, backend=backend)
-        kps = ia.KeypointsOnImage([ia.Keypoint(10, 10)], shape=(100, 200, 3))
+        kps = ia.KeypointsOnImage([ia.Keypoint(10, 10, None, None)], shape=(100, 200, 3))
         kps_aug = aug.augment_keypoints(kps)
         assert kps_aug.shape == (100, 200, 3)
         assert not np.allclose([kps_aug.keypoints[0].x, kps_aug.keypoints[0].y],
@@ -857,7 +864,7 @@ def test_Affine():
                                atol=1e-1, rtol=0)
 
         aug = iaa.Affine(rotate=90, fit_output=True, backend=backend)
-        kps = ia.KeypointsOnImage([ia.Keypoint(10, 10)], shape=(100, 200, 3))
+        kps = ia.KeypointsOnImage([ia.Keypoint(10, 10, None, None)], shape=(100, 200, 3))
         kps_aug = aug.augment_keypoints(kps)
         assert kps_aug.shape == (200, 100, 3)
         assert not np.allclose([kps_aug.keypoints[0].x, kps_aug.keypoints[0].y],
@@ -908,7 +915,7 @@ def test_Affine():
     img[0:5, 5] = 255
     img[2, 4:6] = 255
     img_rot = [np.copy(img), np.copy(np.flipud(np.fliplr(img)))]
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=5, y=2)], shape=img.shape)
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=5, y=2, vis=None, label=None)], shape=img.shape)
     kpsoi_rot = [(5, 2), (5-1, 10-2-1)]
     img_aug_indices = []
     kpsois_aug_indices = []
@@ -1359,8 +1366,9 @@ def test_AffineCv2():
                 outer_pixels[0].append(i)
                 outer_pixels[1].append(j)
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     # no translation/scale/rotate/shear, shouldnt change nothing
     aug = iaa.AffineCv2(scale=1.0, translate_px=0, rotate=0, shear=0)
@@ -1547,11 +1555,15 @@ def test_AffineCv2():
             outer_pixels[0].append(y)
             outer_pixels[1].append(x)
     inner_pixels = ([1, 1, 2, 2], [1, 2, 1, 2])
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=3, y=0),
-                                      ia.Keypoint(x=0, y=3), ia.Keypoint(x=3, y=3)],
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=3, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=0, y=3, vis=None, label=None),
+                                      ia.Keypoint(x=3, y=3, vis=None, label=None)],
                                      shape=image.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=0.765, y=0.765), ia.Keypoint(x=2.235, y=0.765),
-                                          ia.Keypoint(x=0.765, y=2.235), ia.Keypoint(x=2.235, y=2.235)],
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=0.765, y=0.765, vis=None, label=None),
+                                          ia.Keypoint(x=2.235, y=0.765, vis=None, label=None),
+                                          ia.Keypoint(x=0.765, y=2.235, vis=None, label=None),
+                                          ia.Keypoint(x=2.235, y=2.235, vis=None, label=None)],
                                          shape=image.shape)]
 
     observed = aug.augment_images(images)
@@ -1632,8 +1644,8 @@ def test_AffineCv2():
     images_aug = np.array([image_aug])
     images_list = [image]
     images_aug_list = [image_aug]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=base_img.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=2, y=1)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=2, y=1, vis=None, label=None)], shape=base_img.shape)]
 
     observed = aug.augment_images(images)
     assert np.array_equal(observed, images_aug)
@@ -1693,8 +1705,8 @@ def test_AffineCv2():
     images_aug = np.array([image_aug])
     images_list = [image]
     images_aug_list = [image_aug]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=base_img.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     observed = aug.augment_images(images)
     assert np.array_equal(observed, images_aug)
@@ -1726,8 +1738,8 @@ def test_AffineCv2():
     images_aug = np.array([image_aug])
     images_list = [image]
     images_aug_list = [image_aug]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=base_img.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=2, y=1)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=2, y=1, vis=None, label=None)], shape=base_img.shape)]
 
     observed = aug.augment_images(images)
     assert np.array_equal(observed, images_aug)
@@ -1759,8 +1771,8 @@ def test_AffineCv2():
     images_aug = np.array([image_aug])
     images_list = [image]
     images_aug_list = [image_aug]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=base_img.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     observed = aug.augment_images(images)
     assert np.array_equal(observed, images_aug)
@@ -1883,10 +1895,12 @@ def test_AffineCv2():
     images_aug = np.array([image_aug])
     images_list = [image]
     images_aug_list = [image_aug]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=1), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=1)], shape=base_img.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0), ia.Keypoint(x=1, y=1),
-                                          ia.Keypoint(x=1, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=1, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0, vis=None, label=None),
+                                          ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                          ia.Keypoint(x=1, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     observed = aug.augment_images(images)
     observed[observed >= 100] = 255
@@ -2202,7 +2216,8 @@ def test_PiecewiseAffine():
 
     # scale 0, keypoints
     aug = iaa.PiecewiseAffine(scale=0, nb_rows=12, nb_cols=4)
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=5, y=3), ia.Keypoint(x=3, y=8)], shape=(14, 14, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=5, y=3, vis=None, label=None),
+                                 ia.Keypoint(x=3, y=8, vis=None, label=None)], shape=(14, 14, 3))
     kpsoi_aug = aug.augment_keypoints([kpsoi])[0]
     assert kpsoi_aug.shape == (14, 14, 3)
     assert np.allclose(kpsoi_aug.keypoints[0].x, 5)
@@ -2264,7 +2279,8 @@ def test_PiecewiseAffine():
     # strong scale, measure alignment between images and keypoints
     aug = iaa.PiecewiseAffine(scale=0.10, nb_rows=12, nb_cols=4)
     aug_det = aug.to_deterministic()
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=5, y=15), ia.Keypoint(x=17, y=12)], shape=(24, 30, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=5, y=15, vis=None, label=None),
+                                 ia.Keypoint(x=17, y=12, vis=None, label=None)], shape=(24, 30, 3))
     img_kps = np.zeros((24, 30, 3), dtype=np.uint8)
     img_kps = kpsoi.draw_on_image(img_kps, color=[255, 255, 255])
     img_kps_aug = aug_det.augment_image(img_kps)
@@ -2609,8 +2625,8 @@ def test_PiecewiseAffine():
     img = np.zeros((100, 80), dtype=np.uint8)
     img[:, 9:11+1] = 255
     img[:, 69:71+1] = 255
-    kps = [ia.Keypoint(x=10, y=20), ia.Keypoint(x=10, y=40),
-           ia.Keypoint(x=70, y=20), ia.Keypoint(x=70, y=40)]
+    kps = [ia.Keypoint(x=10, y=20, vis=None, label=None), ia.Keypoint(x=10, y=40, vis=None, label=None),
+           ia.Keypoint(x=70, y=20, vis=None, label=None), ia.Keypoint(x=70, y=40, vis=None, label=None)]
     kpsoi = ia.KeypointsOnImage(kps, shape=img.shape)
 
     # alignment
@@ -2629,7 +2645,7 @@ def test_PiecewiseAffine():
 
     # keypoints outside of image
     aug = iaa.PiecewiseAffine(scale=0.1, nb_rows=10, nb_cols=10)
-    kps = [ia.Keypoint(x=-10, y=-20)]
+    kps = [ia.Keypoint(x=-10, y=-20, vis=None, label=None)]
     kpsoi = ia.KeypointsOnImage(kps, shape=img.shape)
     observed = aug.augment_keypoints([kpsoi])
     assert keypoints_equal([kpsoi], observed)
@@ -2909,28 +2925,28 @@ def test_PerspectiveTransform():
     # keypoint augmentation without keep_size
     # TODO deviations of around 0.4-0.7 in this and the next test (between expected and observed
     # coordinates) -- why?
-    kps = [ia.Keypoint(x=10, y=10), ia.Keypoint(x=14, y=11)]
+    kps = [ia.Keypoint(x=10, y=10, vis=None, label=None), ia.Keypoint(x=14, y=11, vis=None, label=None)]
     kpsoi = ia.KeypointsOnImage(kps, shape=img.shape)
     aug = iaa.PerspectiveTransform(scale=0.2, keep_size=False)
     aug.jitter = iap.Deterministic(0.2)
     observed = aug.augment_keypoints([kpsoi])
     kps_expected = [
-        ia.Keypoint(x=10-0.2*30, y=10-0.2*30),
-        ia.Keypoint(x=14-0.2*30, y=11-0.2*30)
+        ia.Keypoint(x=10 - 0.2 * 30, y=10 - 0.2 * 30, vis=None, label=None),
+        ia.Keypoint(x=14 - 0.2 * 30, y=11 - 0.2 * 30, vis=None, label=None)
     ]
     for kp_observed, kp_expected in zip(observed[0].keypoints, kps_expected):
         assert kp_expected.x - 1.5 < kp_observed.x < kp_expected.x + 1.5
         assert kp_expected.y - 1.5 < kp_observed.y < kp_expected.y + 1.5
 
     # keypoint augmentation with keep_size
-    kps = [ia.Keypoint(x=10, y=10), ia.Keypoint(x=14, y=11)]
+    kps = [ia.Keypoint(x=10, y=10, vis=None, label=None), ia.Keypoint(x=14, y=11, vis=None, label=None)]
     kpsoi = ia.KeypointsOnImage(kps, shape=img.shape)
     aug = iaa.PerspectiveTransform(scale=0.2, keep_size=True)
     aug.jitter = iap.Deterministic(0.2)
     observed = aug.augment_keypoints([kpsoi])
     kps_expected = [
-        ia.Keypoint(x=((10-0.2*30)/(30*0.6))*30, y=((10-0.2*30)/(30*0.6))*30),
-        ia.Keypoint(x=((14-0.2*30)/(30*0.6))*30, y=((11-0.2*30)/(30*0.6))*30)
+        ia.Keypoint(x=((10 - 0.2 * 30) / (30 * 0.6)) * 30, y=((10 - 0.2 * 30) / (30 * 0.6)) * 30, vis=None, label=None),
+        ia.Keypoint(x=((14 - 0.2 * 30) / (30 * 0.6)) * 30, y=((11 - 0.2 * 30) / (30 * 0.6)) * 30, vis=None, label=None)
     ]
     for kp_observed, kp_expected in zip(observed[0].keypoints, kps_expected):
         assert kp_expected.x - 1.5 < kp_observed.x < kp_expected.x + 1.5
@@ -2946,9 +2962,11 @@ def test_PerspectiveTransform():
     img[75-3:75+3, 75-3:75+3] = 255
     img[50-3:75+3, 50-3:75+3] = 255
     kps = [
-        ia.Keypoint(y=25, x=25), ia.Keypoint(y=50, x=25), ia.Keypoint(y=75, x=25),
-        ia.Keypoint(y=25, x=75), ia.Keypoint(y=50, x=75), ia.Keypoint(y=75, x=75),
-        ia.Keypoint(y=50, x=50)
+        ia.Keypoint(x=25, y=25, vis=None, label=None), ia.Keypoint(x=25, y=50, vis=None, label=None),
+        ia.Keypoint(x=25, y=75, vis=None, label=None),
+        ia.Keypoint(x=75, y=25, vis=None, label=None), ia.Keypoint(x=75, y=50, vis=None, label=None),
+        ia.Keypoint(x=75, y=75, vis=None, label=None),
+        ia.Keypoint(x=50, y=50, vis=None, label=None)
     ]
     kpsoi = ia.KeypointsOnImage(kps, shape=img.shape)
     aug = iaa.PerspectiveTransform(scale=(0.1, 0.3), keep_size=True)
@@ -3417,10 +3435,14 @@ def test_ElasticTransformation():
     sigma_thresh_orig = iaa.ElasticTransformation.KEYPOINT_AUG_SIGMA_THRESH
     iaa.ElasticTransformation.KEYPOINT_AUG_ALPHA_THRESH = 1.0
     iaa.ElasticTransformation.KEYPOINT_AUG_SIGMA_THRESH = 0
-    kps = [ia.Keypoint(x=1, y=1), ia.Keypoint(x=15, y=25), ia.Keypoint(x=5, y=5),
-           ia.Keypoint(x=7, y=4), ia.Keypoint(x=48, y=5), ia.Keypoint(x=21, y=37),
-           ia.Keypoint(x=32, y=39), ia.Keypoint(x=6, y=8), ia.Keypoint(x=12, y=21),
-           ia.Keypoint(x=3, y=45), ia.Keypoint(x=45, y=3), ia.Keypoint(x=7, y=48)]
+    kps = [ia.Keypoint(x=1, y=1, vis=None, label=None), ia.Keypoint(x=15, y=25, vis=None, label=None),
+           ia.Keypoint(x=5, y=5, vis=None, label=None),
+           ia.Keypoint(x=7, y=4, vis=None, label=None), ia.Keypoint(x=48, y=5, vis=None, label=None),
+           ia.Keypoint(x=21, y=37, vis=None, label=None),
+           ia.Keypoint(x=32, y=39, vis=None, label=None), ia.Keypoint(x=6, y=8, vis=None, label=None),
+           ia.Keypoint(x=12, y=21, vis=None, label=None),
+           ia.Keypoint(x=3, y=45, vis=None, label=None), ia.Keypoint(x=45, y=3, vis=None, label=None),
+           ia.Keypoint(x=7, y=48, vis=None, label=None)]
     kpsoi = ia.KeypointsOnImage(kps, shape=(50, 50))
     aug = iaa.ElasticTransformation(alpha=0.001, sigma=1.0)
     observed = aug.augment_keypoints([kpsoi])[0]
@@ -3438,10 +3460,14 @@ def test_ElasticTransformation():
     sigma_thresh_orig = iaa.ElasticTransformation.KEYPOINT_AUG_SIGMA_THRESH
     iaa.ElasticTransformation.KEYPOINT_AUG_ALPHA_THRESH = 0.0
     iaa.ElasticTransformation.KEYPOINT_AUG_SIGMA_THRESH = 1.0
-    kps = [ia.Keypoint(x=1, y=1), ia.Keypoint(x=15, y=25), ia.Keypoint(x=5, y=5),
-           ia.Keypoint(x=7, y=4), ia.Keypoint(x=48, y=5), ia.Keypoint(x=21, y=37),
-           ia.Keypoint(x=32, y=39), ia.Keypoint(x=6, y=8), ia.Keypoint(x=12, y=21),
-           ia.Keypoint(x=3, y=45), ia.Keypoint(x=45, y=3), ia.Keypoint(x=7, y=48)]
+    kps = [ia.Keypoint(x=1, y=1, vis=None, label=None), ia.Keypoint(x=15, y=25, vis=None, label=None),
+           ia.Keypoint(x=5, y=5, vis=None, label=None),
+           ia.Keypoint(x=7, y=4, vis=None, label=None), ia.Keypoint(x=48, y=5, vis=None, label=None),
+           ia.Keypoint(x=21, y=37, vis=None, label=None),
+           ia.Keypoint(x=32, y=39, vis=None, label=None), ia.Keypoint(x=6, y=8, vis=None, label=None),
+           ia.Keypoint(x=12, y=21, vis=None, label=None),
+           ia.Keypoint(x=3, y=45, vis=None, label=None), ia.Keypoint(x=45, y=3, vis=None, label=None),
+           ia.Keypoint(x=7, y=48, vis=None, label=None)]
     kpsoi = ia.KeypointsOnImage(kps, shape=(50, 50))
     aug = iaa.ElasticTransformation(alpha=1.0, sigma=0.001)
     observed = aug.augment_keypoints([kpsoi])[0]
@@ -3460,10 +3486,14 @@ def test_ElasticTransformation():
     sigma_thresh_orig = iaa.ElasticTransformation.KEYPOINT_AUG_SIGMA_THRESH
     iaa.ElasticTransformation.KEYPOINT_AUG_ALPHA_THRESH = 0
     iaa.ElasticTransformation.KEYPOINT_AUG_SIGMA_THRESH = 0
-    kps = [ia.Keypoint(x=1, y=1), ia.Keypoint(x=15, y=25), ia.Keypoint(x=5, y=5),
-           ia.Keypoint(x=7, y=4), ia.Keypoint(x=48, y=5), ia.Keypoint(x=21, y=37),
-           ia.Keypoint(x=32, y=39), ia.Keypoint(x=6, y=8), ia.Keypoint(x=12, y=21),
-           ia.Keypoint(x=3, y=45), ia.Keypoint(x=45, y=3), ia.Keypoint(x=7, y=48)]
+    kps = [ia.Keypoint(x=1, y=1, vis=None, label=None), ia.Keypoint(x=15, y=25, vis=None, label=None),
+           ia.Keypoint(x=5, y=5, vis=None, label=None),
+           ia.Keypoint(x=7, y=4, vis=None, label=None), ia.Keypoint(x=48, y=5, vis=None, label=None),
+           ia.Keypoint(x=21, y=37, vis=None, label=None),
+           ia.Keypoint(x=32, y=39, vis=None, label=None), ia.Keypoint(x=6, y=8, vis=None, label=None),
+           ia.Keypoint(x=12, y=21, vis=None, label=None),
+           ia.Keypoint(x=3, y=45, vis=None, label=None), ia.Keypoint(x=45, y=3, vis=None, label=None),
+           ia.Keypoint(x=7, y=48, vis=None, label=None)]
     kpsoi = ia.KeypointsOnImage(kps, shape=(50, 50))
     aug = iaa.ElasticTransformation(alpha=0.001, sigma=1.0)
     observed = aug.augment_keypoints([kpsoi])[0]
@@ -3480,11 +3510,11 @@ def test_ElasticTransformation():
     image = np.zeros((120, 70), dtype=np.uint8)
     s = 3
     image[:, 35-s:35+s+1] = 255
-    kps = [ia.Keypoint(x=35, y=20),
-           ia.Keypoint(x=35, y=40),
-           ia.Keypoint(x=35, y=60),
-           ia.Keypoint(x=35, y=80),
-           ia.Keypoint(x=35, y=100)]
+    kps = [ia.Keypoint(x=35, y=20, vis=None, label=None),
+           ia.Keypoint(x=35, y=40, vis=None, label=None),
+           ia.Keypoint(x=35, y=60, vis=None, label=None),
+           ia.Keypoint(x=35, y=80, vis=None, label=None),
+           ia.Keypoint(x=35, y=100, vis=None, label=None)]
     kpsoi = ia.KeypointsOnImage(kps, shape=image.shape)
     aug = iaa.ElasticTransformation(alpha=70, sigma=5)
     aug_det = aug.to_deterministic()
@@ -3769,7 +3799,8 @@ def test_Rot90():
     img = np.arange(4*4*3).reshape((4, 4, 3)).astype(np.uint8)
     hms = ia.HeatmapsOnImage(img[..., 0:1].astype(np.float32) / 255, shape=(4, 4, 3))
     hms_smaller = ia.HeatmapsOnImage(np.float32([[0.1, 0.2, 0.3], [0.4, 0.5, 0.6]]), shape=(4, 8, 3))
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2), ia.Keypoint(x=2, y=3)], shape=(4, 8, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None),
+                                 ia.Keypoint(x=2, y=3, vis=None, label=None)], shape=(4, 8, 3))
     psoi = ia.PolygonsOnImage(
         [ia.Polygon([(1, 1), (3, 1), (3, 3), (1, 3)])],
         shape=(4, 8, 3)

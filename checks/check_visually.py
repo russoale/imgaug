@@ -30,16 +30,16 @@ def main():
 
     keypoints = [
         ia.KeypointsOnImage([
-                ia.Keypoint(x=50, y=40),
-                ia.Keypoint(x=70, y=38),
-                ia.Keypoint(x=62, y=52)
+            ia.Keypoint(x=50, y=40, vis=None, label=None),
+            ia.Keypoint(x=70, y=38, vis=None, label=None),
+            ia.Keypoint(x=62, y=52, vis=None, label=None)
             ],
             shape=images[0].shape
         ),
         ia.KeypointsOnImage([
-                ia.Keypoint(x=55, y=32),
-                ia.Keypoint(x=42, y=95),
-                ia.Keypoint(x=75, y=89)
+            ia.Keypoint(x=55, y=32, vis=None, label=None),
+            ia.Keypoint(x=42, y=95, vis=None, label=None),
+            ia.Keypoint(x=75, y=89, vis=None, label=None)
             ],
             shape=images[1].shape
         )

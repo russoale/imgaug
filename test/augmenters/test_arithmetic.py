@@ -48,8 +48,9 @@ def test_AdditiveGaussianNoise():
     images = np.array([base_img])
     images_list = [base_img]
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     # no noise, shouldnt change anything
     aug = iaa.AdditiveGaussianNoise(loc=0, scale=0)
@@ -220,8 +221,9 @@ def test_Dropout():
     images = np.array([base_img])
     images_list = [base_img]
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     # no dropout, shouldnt change anything
     aug = iaa.Dropout(p=0)
@@ -421,8 +423,9 @@ def test_Multiply():
     base_img = np.ones((3, 3, 1), dtype=np.uint8) * 100
     images = np.array([base_img])
     images_list = [base_img]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     # no multiply, shouldnt change anything
     aug = iaa.Multiply(mul=1.0)
@@ -809,8 +812,9 @@ def test_MultiplyElementwise():
     base_img = np.ones((3, 3, 1), dtype=np.uint8) * 100
     images = np.array([base_img])
     images_list = [base_img]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     # no multiply, shouldnt change anything
     aug = iaa.MultiplyElementwise(mul=1.0)
@@ -1219,8 +1223,9 @@ def test_ReplaceElementwise():
     base_img = np.ones((3, 3, 1), dtype=np.uint8) + 99
     images = np.array([base_img])
     images_list = [base_img]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     # no replace, shouldnt change anything
     aug = iaa.ReplaceElementwise(mask=0, replacement=0)
@@ -1836,8 +1841,9 @@ def test_Add():
     base_img = np.ones((3, 3, 1), dtype=np.uint8) * 100
     images = np.array([base_img])
     images_list = [base_img]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     # no add, shouldnt change anything
     aug = iaa.Add(value=0)
@@ -2242,8 +2248,9 @@ def test_AddElementwise():
     base_img = np.ones((3, 3, 1), dtype=np.uint8) * 100
     images = np.array([base_img])
     images_list = [base_img]
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     # no add, shouldnt change anything
     aug = iaa.AddElementwise(value=0)
@@ -2653,8 +2660,9 @@ def test_Invert():
     reseed()
 
     zeros = np.zeros((4, 4, 3), dtype=np.uint8)
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=zeros.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=zeros.shape)]
 
     observed = iaa.Invert(p=1.0).augment_image(zeros + 255)
     expected = zeros
@@ -2921,8 +2929,9 @@ def deactivated_test_ContrastNormalization():
     reseed()
 
     zeros = np.zeros((4, 4, 3), dtype=np.uint8)
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=zeros.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=zeros.shape)]
 
     # contrast stays the same
     observed = iaa.ContrastNormalization(alpha=1.0).augment_image(zeros + 50)

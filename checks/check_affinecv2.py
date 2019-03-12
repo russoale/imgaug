@@ -27,7 +27,7 @@ def main():
             kp = (xcoord, ycoord)
             kps.append(kp)
     kps = set(kps)
-    kps = [ia.Keypoint(x=xcoord, y=ycoord) for (xcoord, ycoord) in kps]
+    kps = [ia.Keypoint(x=xcoord, y=ycoord, vis=None, label=None) for (xcoord, ycoord) in kps]
     kps = ia.KeypointsOnImage(kps, shape=image.shape)
 
     bb = ia.BoundingBox(x1=BB_X1, x2=BB_X2, y1=BB_Y1, y2=BB_Y2)

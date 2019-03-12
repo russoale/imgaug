@@ -325,8 +325,9 @@ def test_GaussianBlur():
                 outer_pixels[0].append(i)
                 outer_pixels[1].append(j)
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     # no blur, shouldnt change anything
     aug = iaa.GaussianBlur(sigma=0)
@@ -663,8 +664,9 @@ def test_AverageBlur():
     ]
     blur5x5 = np.array(blur5x5, dtype=np.uint8)[..., np.newaxis]
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     # no blur, shouldnt change anything
     aug = iaa.AverageBlur(k=0)
@@ -939,8 +941,9 @@ def test_MedianBlur():
     blur5x5[7, 6, 0] = 0
     blur5x5[blur5x5 > 1] = 1
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     # no blur, shouldnt change anything
     aug = iaa.MedianBlur(k=1)

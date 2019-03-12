@@ -231,7 +231,7 @@ class TestPool(unittest.TestCase):
         image = np.zeros((10, 10, 1), dtype=np.uint8)
         # keypoints here will not be changed by augseq, but they will induce deterministic mode to start in
         # augment_batches() as each batch contains images AND keypoints
-        kps = ia.KeypointsOnImage([ia.Keypoint(x=2, y=0)], shape=(10, 10, 1))
+        kps = ia.KeypointsOnImage([ia.Keypoint(x=2, y=0, vis=None, label=None)], shape=(10, 10, 1))
         batch = ia.Batch(images=np.uint8([image, image]), keypoints=[kps, kps])
         batches = [batch.deepcopy() for _ in sm.xrange(60)]
 
@@ -296,7 +296,7 @@ class TestPool(unittest.TestCase):
         image = np.zeros((10, 10, 1), dtype=np.uint8)
         # keypoints here will not be changed by augseq, but they will induce deterministic mode to start in
         # augment_batches() as each batch contains images AND keypoints
-        kps = ia.KeypointsOnImage([ia.Keypoint(x=2, y=0)], shape=(10, 10, 1))
+        kps = ia.KeypointsOnImage([ia.Keypoint(x=2, y=0, vis=None, label=None)], shape=(10, 10, 1))
         batch = ia.Batch(images=np.uint8([image, image]), keypoints=[kps, kps])
         batches = [batch.deepcopy() for _ in sm.xrange(20)]
         with multicore.Pool(augseq, processes=2, maxtasksperchild=5) as pool:

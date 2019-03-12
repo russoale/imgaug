@@ -215,7 +215,7 @@ def main():
     for _ in sm.xrange(20):
         x = random.randint(0, 31)
         y = random.randint(0, 31)
-        kps.append(ia.Keypoint(x=x, y=y))
+        kps.append(ia.Keypoint(x=x, y=y, vis=None, label=None))
     kps = ia.KeypointsOnImage(kps, shape=(32, 32, 3))
     small_keypoints_one = kps.on((4, 4, 3))
     medium_keypoints_one = kps.on((32, 32, 3))

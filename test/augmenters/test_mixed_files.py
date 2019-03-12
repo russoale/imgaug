@@ -37,8 +37,8 @@ def test_determinism():
 
     keypoints = [
         ia.KeypointsOnImage([
-            ia.Keypoint(x=20, y=10), ia.Keypoint(x=5, y=5),
-            ia.Keypoint(x=10, y=43)], shape=(50, 60, 3))
+            ia.Keypoint(x=20, y=10, vis=None, label=None), ia.Keypoint(x=5, y=5, vis=None, label=None),
+            ia.Keypoint(x=10, y=43, vis=None, label=None)], shape=(50, 60, 3))
     ] * 20
 
     augs = [
@@ -160,7 +160,7 @@ def test_keypoint_augmentation():
     keypoints = []
     for y in range(40//5):
         for x in range(60//5):
-            keypoints.append(ia.Keypoint(y=y*5, x=x*5))
+            keypoints.append(ia.Keypoint(x=x * 5, y=y * 5, vis=None, label=None))
 
     keypoints_oi = ia.KeypointsOnImage(keypoints, shape=(40, 60, 3))
     keypoints_oi_empty = ia.KeypointsOnImage([], shape=(40, 60, 3))

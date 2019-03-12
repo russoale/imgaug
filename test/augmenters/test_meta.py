@@ -166,10 +166,12 @@ def test_Lambda():
                                    [0.0, 1.0, 1.0]])
     heatmaps = ia.HeatmapsOnImage(heatmaps_arr, shape=(3, 3, 3))
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0), ia.Keypoint(x=2, y=1),
-                                          ia.Keypoint(x=0, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0, vis=None, label=None),
+                                          ia.Keypoint(x=2, y=1, vis=None, label=None),
+                                          ia.Keypoint(x=0, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     psois = [ia.PolygonsOnImage(
         [ia.Polygon([(0, 0), (2, 0), (2, 2), (0, 2)])],
@@ -338,8 +340,9 @@ def test_AssertLambda():
                                [0.0, 1.0, 1.0]])
     heatmaps = ia.HeatmapsOnImage(heatmaps_arr, shape=(3, 3, 3))
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     polygons = [ia.PolygonsOnImage([
         ia.Polygon([(0, 0), (2, 0), (2, 2), (0, 2)])],
@@ -587,8 +590,9 @@ def test_AssertShape():
                                [0.0, 0.0, 1.0, 0.0],
                                [0.0, 1.0, 1.0, 0.0]])
     heatmaps = ia.HeatmapsOnImage(heatmaps_arr, shape=(3, 4, 3))
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
     polygons = [ia.PolygonsOnImage(
         [ia.Polygon([(0, 0), (2, 0), (2, 2), (0, 2)])],
         shape=base_img.shape
@@ -605,8 +609,9 @@ def test_AssertShape():
                                   [0.0, 1.0, 1.0, 0.0],
                                   [1.0, 0.0, 1.0, 0.0]])
     heatmaps_h4 = ia.HeatmapsOnImage(heatmaps_arr_h4, shape=(4, 4, 3))
-    keypoints_h4 = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                         ia.Keypoint(x=2, y=2)], shape=base_img_h4.shape)]
+    keypoints_h4 = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                         ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                         ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img_h4.shape)]
     polygons_h4 = [ia.PolygonsOnImage(
         [ia.Polygon([(0, 0), (2, 0), (2, 2), (0, 2)])],
         shape=base_img_h4.shape
@@ -1069,10 +1074,10 @@ def test_clip_augmented_images():
 
 def test_reduce_to_nonempty():
     kpsois = [
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=1)], shape=(4, 4, 3)),
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=1), ia.Keypoint(x=1, y=0)], shape=(4, 4, 3)),
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=1, vis=None, label=None)], shape=(4, 4, 3)),
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=1, vis=None, label=None), ia.Keypoint(x=1, y=0, vis=None, label=None)], shape=(4, 4, 3)),
         ia.KeypointsOnImage([], shape=(4, 4, 3)),
-        ia.KeypointsOnImage([ia.Keypoint(x=2, y=2)], shape=(4, 4, 3)),
+        ia.KeypointsOnImage([ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=(4, 4, 3)),
         ia.KeypointsOnImage([], shape=(4, 4, 3))
     ]
 
@@ -1090,7 +1095,7 @@ def test_reduce_to_nonempty():
     assert ids == []
 
     kpsois = [
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=1)], shape=(4, 4, 3))
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=1, vis=None, label=None)], shape=(4, 4, 3))
     ]
 
     kpsois_reduced, ids = iaa.reduce_to_nonempty(kpsois)
@@ -1106,9 +1111,9 @@ def test_reduce_to_nonempty():
 
 def test_invert_reduce_to_nonempty():
     kpsois = [
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=1)], shape=(4, 4, 3)),
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=1), ia.Keypoint(x=1, y=0)], shape=(4, 4, 3)),
-        ia.KeypointsOnImage([ia.Keypoint(x=2, y=2)], shape=(4, 4, 3)),
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=1, vis=None, label=None)], shape=(4, 4, 3)),
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=1, vis=None, label=None), ia.Keypoint(x=1, y=0, vis=None, label=None)], shape=(4, 4, 3)),
+        ia.KeypointsOnImage([ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=(4, 4, 3)),
     ]
 
     kpsois_recovered = iaa.invert_reduce_to_nonempty(kpsois, [0, 1, 2], ["foo1", "foo2", "foo3"])
@@ -1336,8 +1341,9 @@ def test_Augmenter():
     # --------
     # TODO incomplete tests, handle only cases that were missing in code coverage report
     aug = DummyAugmenterCallsParent()
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0), ia.Keypoint(x=2, y=0),
-                                      ia.Keypoint(x=2, y=1)], shape=(4, 4, 3))]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=1, vis=None, label=None)], shape=(4, 4, 3))]
     got_exception = False
     try:
         _ = aug.augment_keypoints(keypoints)
@@ -1591,7 +1597,7 @@ def test_Augmenter_augment_keypoints():
 
     # test empty KeypointsOnImage objects
     kpsoi1 = ia.KeypointsOnImage([], shape=(32, 32, 3))
-    kpsoi2 = ia.KeypointsOnImage([ia.Keypoint(10, 10)], shape=(32, 32, 3))
+    kpsoi2 = ia.KeypointsOnImage([ia.Keypoint(10, 10, None, None)], shape=(32, 32, 3))
 
     aug = iaa.Affine(translate_px={"x": 1})
     kpsoi_aug = aug.augment_keypoints([kpsoi1, kpsoi2])
@@ -1612,17 +1618,17 @@ def test_Augmenter_augment_keypoints():
     # Test if augmenting lists of KeypointsOnImage is still aligned with image augmentation when one KeypointsOnImage
     # instance is empty (no keypoints)
     kpsoi_lst = [
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0)], shape=(1, 10)),
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0)], shape=(1, 10)),
-        ia.KeypointsOnImage([ia.Keypoint(x=1, y=0)], shape=(1, 10)),
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0)], shape=(1, 10)),
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0)], shape=(1, 10)),
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None)], shape=(1, 10)),
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None)], shape=(1, 10)),
+        ia.KeypointsOnImage([ia.Keypoint(x=1, y=0, vis=None, label=None)], shape=(1, 10)),
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None)], shape=(1, 10)),
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None)], shape=(1, 10)),
         ia.KeypointsOnImage([], shape=(1, 8)),
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0)], shape=(1, 10)),
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0)], shape=(1, 10)),
-        ia.KeypointsOnImage([ia.Keypoint(x=1, y=0)], shape=(1, 10)),
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0)], shape=(1, 10)),
-        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0)], shape=(1, 10))
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None)], shape=(1, 10)),
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None)], shape=(1, 10)),
+        ia.KeypointsOnImage([ia.Keypoint(x=1, y=0, vis=None, label=None)], shape=(1, 10)),
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None)], shape=(1, 10)),
+        ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None)], shape=(1, 10))
     ]
     image = np.zeros((1, 10), dtype=np.uint8)
     image[0, 0] = 255
@@ -1654,8 +1660,9 @@ def test_Augmenter_augment_keypoints():
             assert np.array_equal(translations_imgs, translations_kps)
 
     # single instance of KeypointsOnImage as input
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2), ia.Keypoint(x=2, y=5),
-                                 ia.Keypoint(x=3, y=3)], shape=(5, 10, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None),
+                                 ia.Keypoint(x=2, y=5, vis=None, label=None),
+                                 ia.Keypoint(x=3, y=3, vis=None, label=None)], shape=(5, 10, 3))
 
     aug = iaa.Noop()
     kpsoi_aug = aug.augment_keypoints(kpsoi)
@@ -2313,8 +2320,9 @@ def test_Augmenter_hooks():
         return False
 
     hooks = ia.HooksKeypoints(activator=activator)
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0), ia.Keypoint(x=2, y=0),
-                                      ia.Keypoint(x=2, y=1)], shape=image.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=1, vis=None, label=None)], shape=image.shape)]
     keypoints_aug = aug.augment_keypoints(keypoints, hooks=hooks)
     assert keypoints_equal(keypoints_aug, keypoints)
 
@@ -2468,10 +2476,12 @@ def test_Sequential():
     images_lr_ud_list = [image_lr_ud]
     images_lr_ud = np.array([image_lr_ud])
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0), ia.Keypoint(x=2, y=0),
-                                      ia.Keypoint(x=2, y=1)], shape=image.shape)]
-    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=2), ia.Keypoint(x=0, y=2),
-                                          ia.Keypoint(x=0, y=1)], shape=image.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=1, vis=None, label=None)], shape=image.shape)]
+    keypoints_aug = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None),
+                                          ia.Keypoint(x=0, y=2, vis=None, label=None),
+                                          ia.Keypoint(x=0, y=1, vis=None, label=None)], shape=image.shape)]
 
     polygons = [
         ia.PolygonsOnImage(
@@ -2592,9 +2602,9 @@ def test_Sequential():
     heatmaps_arr_second_first = (heatmaps_arr * 0.5) + 0.1
     heatmaps = ia.HeatmapsOnImage(heatmaps_arr, shape=(3, 3, 3))
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0)], shape=image.shape)]
-    keypoints_first_second = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1)], shape=image.shape)]
-    keypoints_second_first = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0)], shape=image.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None)], shape=image.shape)]
+    keypoints_first_second = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=1, vis=None, label=None)], shape=image.shape)]
+    keypoints_second_first = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0, vis=None, label=None)], shape=image.shape)]
 
     polygons = [ia.PolygonsOnImage(
         [ia.Polygon([(0, 0), (1, 0), (1, 1)])],
@@ -3001,7 +3011,7 @@ def test_SomeOf():
 
     # basic keypoints test
     augs = [iaa.Affine(translate_px={"x": 1}), iaa.Affine(translate_px={"y": 1})]
-    kps = [ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1)]
+    kps = [ia.Keypoint(x=0, y=0, vis=None, label=None), ia.Keypoint(x=1, y=1, vis=None, label=None)]
     kpsoi = ia.KeypointsOnImage(kps, shape=(5, 6, 3))
     kpsoi_x = kpsoi.shift(x=1)
     kpsoi_y = kpsoi.shift(y=1)
@@ -3156,7 +3166,7 @@ def test_SomeOf():
         iaa.Affine(translate_px={"x": 1}, order=0),
         iaa.Affine(translate_px={"y": 1}, order=0)
     ]
-    kps = [ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1)]
+    kps = [ia.Keypoint(x=0, y=0, vis=None, label=None), ia.Keypoint(x=1, y=1, vis=None, label=None)]
     kpsoi = ia.KeypointsOnImage(kps, shape=(5, 6, 3))
     kpsoi_x = kpsoi.shift(x=1)
     kpsoi_y = kpsoi.shift(y=1)
@@ -3490,12 +3500,15 @@ def test_Sometimes():
     images_ud_list = [image_ud]
     images_ud = np.array([image_ud])
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0), ia.Keypoint(x=2, y=0),
-                                      ia.Keypoint(x=2, y=1)], shape=image.shape)]
-    keypoints_lr = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0), ia.Keypoint(x=0, y=0),
-                                         ia.Keypoint(x=0, y=1)], shape=image.shape)]
-    keypoints_ud = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=2), ia.Keypoint(x=2, y=2),
-                                         ia.Keypoint(x=2, y=1)], shape=image.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=1, vis=None, label=None)], shape=image.shape)]
+    keypoints_lr = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=0, vis=None, label=None),
+                                         ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                         ia.Keypoint(x=0, y=1, vis=None, label=None)], shape=image.shape)]
+    keypoints_ud = [ia.KeypointsOnImage([ia.Keypoint(x=1, y=2, vis=None, label=None),
+                                         ia.Keypoint(x=2, y=2, vis=None, label=None),
+                                         ia.Keypoint(x=2, y=1, vis=None, label=None)], shape=image.shape)]
 
     polygons = [ia.PolygonsOnImage(
         [ia.Polygon([(0, 0), (2, 0), (2, 2)])],
@@ -4115,7 +4128,8 @@ def test_WithChannels():
     assert np.array_equal(observed, expected)
 
     # test keypoint aug
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=2)], shape=(5, 6, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                 ia.Keypoint(x=1, y=2, vis=None, label=None)], shape=(5, 6, 3))
     kpsoi_x = kpsoi.shift(x=1)
     aug = iaa.WithChannels(1, children=[iaa.Affine(translate_px={"x": 1})])
     kpsoi_aug = aug.augment_keypoints(kpsoi)
@@ -4341,7 +4355,8 @@ def test_ChannelShuffle():
 
     # keypoints may not change
     aug = iaa.ChannelShuffle(p=1.0)
-    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=3, y=1), ia.Keypoint(x=2, y=4)], shape=(10, 10, 3))
+    kpsoi = ia.KeypointsOnImage([ia.Keypoint(x=3, y=1, vis=None, label=None),
+                                 ia.Keypoint(x=2, y=4, vis=None, label=None)], shape=(10, 10, 3))
     kpsoi_aug = aug.augment_keypoints([kpsoi])[0]
     assert kpsoi_aug.shape == (10, 10, 3)
     assert np.allclose(kpsoi_aug.keypoints[0].x, 3)
@@ -4481,12 +4496,9 @@ def test_Augmenter_augment_batches():
                       [0, 0, 1, 1],
                       [0, 1, 1, 1]], dtype=np.uint8)
     image_flipped = np.fliplr(image)
-    keypoint = ia.Keypoint(x=2, y=1)
+    keypoint = ia.Keypoint(x=2, y=1, vis=None, label=None)
     keypoints = [ia.KeypointsOnImage([keypoint], shape=image.shape + (1,))]
-    kp_flipped = ia.Keypoint(
-        x=image.shape[1]-1-keypoint.x,
-        y=keypoint.y
-    )
+    kp_flipped = ia.Keypoint(x=image.shape[1] - 1 - keypoint.x, y=keypoint.y, vis=None, label=None)
 
     # basic functionality test (images as list)
     for bg in [True, False]:

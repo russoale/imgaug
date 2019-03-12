@@ -719,7 +719,7 @@ def quokka_keypoints(size=None, extract=None):
         json_dict = json.load(f)
     keypoints = []
     for kp_dict in json_dict["keypoints"]:
-        keypoints.append(Keypoint(x=kp_dict["x"] - left, y=kp_dict["y"] - top))
+        keypoints.append(Keypoint(x=kp_dict["x"] - left, y=kp_dict["y"] - top, vis=None, label=None))
     if extract is not None:
         shape = (bb_extract.height, bb_extract.width, 3)
     else:
@@ -2045,9 +2045,11 @@ class Keypoint(object):
 
     """
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, vis, label):
         self.x = x
         self.y = y
+        self.vis = vis
+        self.label = label
 
     @property
     def x_int(self):
@@ -2075,6 +2077,29 @@ class Keypoint(object):
         """
         return int(np.round(self.y))
 
+    @property
+    def vis_int(self):
+        """
+        Return the keypoint's visibility flag
+
+        Returns
+        -------
+        result : int
+        """
+        return int(self.vis)
+
+    @property
+    def label_string(self):
+        """
+        Return the keypoint's label
+
+        Returns
+        -------
+        result : string
+            Label associated with keypoint-coordinates
+        """
+        return self.label
+
     def project(self, from_shape, to_shape):
         """
         Project the keypoint onto a new position on a new image.
@@ -2101,7 +2126,7 @@ class Keypoint(object):
 
         """
         if from_shape[0:2] == to_shape[0:2]:
-            return self.deepcopy(x=self.x, y=self.y)
+            return self.deepcopy(x=self.x, y=self.y, vis=self.vis, label=self.label)
 
         # avoid division by zeros
         # TODO add this to other project() functions too
@@ -2117,7 +2142,7 @@ class Keypoint(object):
         to_height, to_width = to_shape[0:2]
         x = (self.x / from_width) * to_width
         y = (self.y / from_height) * to_height
-        return self.deepcopy(x=x, y=y)
+        return self.deepcopy(x=x, y=y, vis=self.vis, label=self.label)
 
     def shift(self, x=0, y=0):
         """
@@ -2137,7 +2162,7 @@ class Keypoint(object):
             Keypoint object with new coordinates.
 
         """
-        return self.deepcopy(self.x + x, self.y + y)
+        return self.deepcopy(self.x + x, self.y + y, vis=self.vis, label=self.label)
 
     def generate_similar_points_manhattan(self, nb_steps, step_size, return_array=False):
         """
@@ -2202,9 +2227,9 @@ class Keypoint(object):
 
         if return_array:
             return points
-        return [self.deepcopy(x=points[i, 0], y=points[i, 1]) for i in sm.xrange(points.shape[0])]
+        return [self.deepcopy(x=points[i, 0], y=points[i, 1], vis=self.vis, label=self.label) for i in sm.xrange(points.shape[0])]
 
-    def copy(self, x=None, y=None):
+    def copy(self, x=None, y=None, vis=None, label=None):
         """
         Create a shallow copy of the Keypoint object.
 
@@ -2222,11 +2247,15 @@ class Keypoint(object):
         -------
         imgaug.Keypoint
             Shallow copy.
+            :param x:
+            :param y:
+            :param vis:
+            :param label:
 
         """
-        return self.deepcopy(x=x, y=y)
+        return self.deepcopy(x=x, y=y, vis=vis, label=label)
 
-    def deepcopy(self, x=None, y=None):
+    def deepcopy(self, x=None, y=None, vis=None, label=None):
         """
         Create a deep copy of the Keypoint object.
 
@@ -2244,17 +2273,23 @@ class Keypoint(object):
         -------
         imgaug.Keypoint
             Deep copy.
+            :param x:
+            :param y:
+            :param vis:
+            :param label:
 
         """
         x = self.x if x is None else x
         y = self.y if y is None else y
-        return Keypoint(x=x, y=y)
+        vis = self.vis if vis is None else vis
+        label = self.label if label is None else label
+        return Keypoint(x=x, y=y, vis=vis, label=label)
 
     def __repr__(self):
         return self.__str__()
 
     def __str__(self):
-        return "Keypoint(x=%.8f, y=%.8f)" % (self.x, self.y)
+        return "Keypoint(x=%.8f, y=%.8f, vis=%d, label=%s)" % (self.x, self.y, self.vis, self.label)
 
 
 class KeypointsOnImage(object):
@@ -2272,7 +2307,7 @@ class KeypointsOnImage(object):
     Examples
     --------
     >>> image = np.zeros((70, 70))
-    >>> kps = [Keypoint(x=10, y=20), Keypoint(x=34, y=60)]
+    >>> kps = [Keypoint(x=10,y=20,vis=None,label=None), Keypoint(x=34,y=60,vis=None,label=None)]
     >>> kps_oi = KeypointsOnImage(kps, shape=image.shape)
 
     """
@@ -2466,7 +2501,7 @@ class KeypointsOnImage(object):
             KeypointsOnImage object that contains all keypoints from the array.
 
         """
-        keypoints = [Keypoint(x=coords[i, 0], y=coords[i, 1]) for i in sm.xrange(coords.shape[0])]
+        keypoints = [Keypoint(x=coords[i, 0], y=coords[i, 1], vis=None, label=None) for i in sm.xrange(coords.shape[0])]
         return KeypointsOnImage(keypoints, shape)
 
     # TODO add to_gaussian_heatmaps(), from_gaussian_heatmaps()
@@ -2573,12 +2608,12 @@ class KeypointsOnImage(object):
             maxidx_ndim = np.unravel_index(maxidx_flat, (height, width))
             found = (image[maxidx_ndim[0], maxidx_ndim[1], i] >= threshold)
             if found:
-                keypoints.append(Keypoint(x=maxidx_ndim[1], y=maxidx_ndim[0]))
+                keypoints.append(Keypoint(x=maxidx_ndim[1], y=maxidx_ndim[0], vis=None, label=None))
             else:
                 if drop_if_not_found:
                     pass  # dont add the keypoint to the result list, i.e. drop it
                 else:
-                    keypoints.append(Keypoint(x=if_not_found_x, y=if_not_found_y))
+                    keypoints.append(Keypoint(x=if_not_found_x, y=if_not_found_y, vis=None, label=None))
 
         out_shape = (height, width)
         if nb_channels is not None:
@@ -2701,12 +2736,12 @@ class KeypointsOnImage(object):
             else:
                 found = True
             if found:
-                keypoints.append(Keypoint(x=hitidx_ndim[1], y=hitidx_ndim[0]))
+                keypoints.append(Keypoint(x=hitidx_ndim[1], y=hitidx_ndim[0], vis=None, label=None))
             else:
                 if drop_if_not_found:
                     pass  # dont add the keypoint to the result list, i.e. drop it
                 else:
-                    keypoints.append(Keypoint(x=if_not_found_x, y=if_not_found_y))
+                    keypoints.append(Keypoint(x=if_not_found_x, y=if_not_found_y, vis=None, label=None))
 
         out_shape = (height, width)
         if nb_channels is not None:
@@ -3452,10 +3487,10 @@ class BoundingBox(object):
 
         """
         return [
-            Keypoint(x=self.x1, y=self.y1),
-            Keypoint(x=self.x2, y=self.y1),
-            Keypoint(x=self.x2, y=self.y2),
-            Keypoint(x=self.x1, y=self.y2)
+            Keypoint(x=self.x1, y=self.y1, vis=None, label=None),
+            Keypoint(x=self.x2, y=self.y1, vis=None, label=None),
+            Keypoint(x=self.x2, y=self.y2, vis=None, label=None),
+            Keypoint(x=self.x1, y=self.y2, vis=None, label=None)
         ]
 
     def copy(self, x1=None, y1=None, x2=None, y2=None, label=None):
@@ -4030,7 +4065,7 @@ class Polygon(object):
         """
         if from_shape[0:2] == to_shape[0:2]:
             return self.copy()
-        exterior = [Keypoint(x=x, y=y).project(from_shape, to_shape) for x, y in self.exterior]
+        exterior = [Keypoint(x=x, y=y, vis=None, label=None).project(from_shape, to_shape) for x, y in self.exterior]
         return self.copy(exterior=exterior)
 
     def find_closest_point_index(self, x, y, return_distance=False):
@@ -4604,7 +4639,7 @@ class Polygon(object):
             Exterior vertices as ``Keypoint`` instances.
 
         """
-        return [Keypoint(x=point[0], y=point[1]) for point in self.exterior]
+        return [Keypoint(x=point[0], y=point[1], vis=None, label=None) for point in self.exterior]
 
     @staticmethod
     def from_shapely(polygon_shapely, label=None):
@@ -5227,7 +5262,7 @@ class _ConcavePolygonRecoverer(object):
 
         # create Polygon instance, if it is already valid then just return
         # immediately
-        polygon = old_polygon.deepcopy(exterior=new_exterior)
+        polygon = old_polygon.deepcopy()
         if polygon.is_valid:
             return polygon
 
@@ -5262,7 +5297,7 @@ class _ConcavePolygonRecoverer(object):
 
         # TODO return new_exterior_concave here instead of polygon, leave it to
         #      caller to decide what to do with it
-        return old_polygon.deepcopy(exterior=new_exterior_concave)
+        return old_polygon.deepcopy()
 
     def _remove_consecutive_duplicate_points(self, points):
         result = []

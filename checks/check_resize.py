@@ -19,7 +19,8 @@ def main():
 
     image = ia.quokka(size=0.5)
     kps = [ia.KeypointsOnImage(
-        [ia.Keypoint(x=245, y=203), ia.Keypoint(x=365, y=195), ia.Keypoint(x=313, y=269)],
+        [ia.Keypoint(x=245, y=203, vis=None, label=None), ia.Keypoint(x=365, y=195, vis=None, label=None),
+         ia.Keypoint(x=313, y=269, vis=None, label=None)],
         shape=(image.shape[0]*2, image.shape[1]*2)
     )]
     kps[0] = kps[0].on(image.shape)

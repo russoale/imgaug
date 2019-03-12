@@ -54,10 +54,12 @@ def test_Fliplr():
     images = np.array([base_img])
     images_flipped = np.array([base_img_flipped])
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
-    keypoints_flipped = [ia.KeypointsOnImage([ia.Keypoint(x=2, y=0), ia.Keypoint(x=1, y=1),
-                                              ia.Keypoint(x=0, y=2)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_flipped = [ia.KeypointsOnImage([ia.Keypoint(x=2, y=0, vis=None, label=None),
+                                              ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                              ia.Keypoint(x=0, y=2, vis=None, label=None)], shape=base_img.shape)]
 
     polygons = [ia.PolygonsOnImage(
         [ia.Polygon([(0, 0), (2, 0), (2, 2)])],
@@ -309,10 +311,12 @@ def test_Flipud():
     images = np.array([base_img])
     images_flipped = np.array([base_img_flipped])
 
-    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0), ia.Keypoint(x=1, y=1),
-                                      ia.Keypoint(x=2, y=2)], shape=base_img.shape)]
-    keypoints_flipped = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=2), ia.Keypoint(x=1, y=1),
-                                              ia.Keypoint(x=2, y=0)], shape=base_img.shape)]
+    keypoints = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=0, vis=None, label=None),
+                                      ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                      ia.Keypoint(x=2, y=2, vis=None, label=None)], shape=base_img.shape)]
+    keypoints_flipped = [ia.KeypointsOnImage([ia.Keypoint(x=0, y=2, vis=None, label=None),
+                                              ia.Keypoint(x=1, y=1, vis=None, label=None),
+                                              ia.Keypoint(x=2, y=0, vis=None, label=None)], shape=base_img.shape)]
 
     polygons = [ia.PolygonsOnImage(
         [ia.Polygon([(0, 0), (2, 0), (2, 2)])],

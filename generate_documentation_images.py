@@ -379,10 +379,10 @@ def chapter_examples_keypoints_simple():
 
     image = ia.quokka(size=(256, 256))
     keypoints = ia.KeypointsOnImage([
-        ia.Keypoint(x=65, y=100),
-        ia.Keypoint(x=75, y=200),
-        ia.Keypoint(x=100, y=100),
-        ia.Keypoint(x=200, y=80)
+        ia.Keypoint(x=65, y=100, vis=None, label=None),
+        ia.Keypoint(x=75, y=200, vis=None, label=None),
+        ia.Keypoint(x=100, y=100, vis=None, label=None),
+        ia.Keypoint(x=200, y=80, vis=None, label=None)
     ], shape=image.shape)
 
     seq = iaa.Sequential([
